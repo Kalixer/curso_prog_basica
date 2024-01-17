@@ -21,6 +21,7 @@ const contenedorAtaques = document.getElementById('contenedorAtaques')
 let mokepones = []
 let ataqueJugador = []
 let ataqueEnemigo = []
+let ataquesDefEnemigo = []
 let opcionDeMokepones
 let inputHipodoge
 let inputCapipepo
@@ -163,6 +164,7 @@ function mostrarAtaques(ataques) {
 }
 
 function secuenciaAtaque() {
+    asignarAtaquesEnemigo()
     // 💧 🔥 🌱
     botones.forEach((boton) => {
         boton.addEventListener('click', (e) => {
@@ -192,18 +194,23 @@ function seleccionarMascotaEnemigo() {
     ataquesMokeponEnemigo = mokepones[mascotaAleatoria].ataques
     secuenciaAtaque()
 }
+function asignarAtaquesEnemigo() {
+    ataquesMokeponEnemigo.forEach(ataque => {
+        if(ataque.nombre === '💧') {
+            ataquesDefEnemigo.push('AGUA')
+        } else if(ataque.nombre === '🔥') {
+            ataquesDefEnemigo.push('FUEGO')
+        } else if(ataque.nombre === '🌱') {
+            ataquesDefEnemigo.push('TIERRA')
+        }
+    })
+}
 
 function ataqueAleatorioEnemigo() {
-    let ataqueAleatorio = aleatorio(0, mokepones.length - 1)
+    let ataqueAleatorio = aleatorio(0, ataquesDefEnemigo.length - 1)
+
+    ataqueEnemigo.push((ataquesDefEnemigo.splice(ataqueAleatorio, 1))[0])
     
-    if (ataqueAleatorio == 0 || ataqueAleatorio == 1) {
-        ataqueEnemigo.push('FUEGO')
-    } else if (ataqueAleatorio == 3 || ataqueAleatorio == 4) {
-        ataqueEnemigo.push('AGUA')
-    } else {
-        ataqueEnemigo.push('TIERRA')
-    }
-    console.log('Enemigo: ', ataqueEnemigo)
     iniciarPelea()
 }
 
@@ -273,8 +280,6 @@ function revisarVictorias() {
 }
 
 function crearMensaje(resultado, emojiE, emojiJ) {
-    
-    
     let nuevoAtaqueDelJugador = document.createElement('p')
     let nuevoAtaqueDelEnemigo = document.createElement('p')
 
