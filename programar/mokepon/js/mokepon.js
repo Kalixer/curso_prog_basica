@@ -34,6 +34,10 @@ let botonTierra
 let botones = []
 let indexAtaqueJugador
 let indexAtaqueEnemigo
+let emojiJugador
+let emojiEnemigo
+let victoriasJugador = 0
+let victoriasEnemigo = 0
 let vidasJugador = 3
 let vidasEnemigo = 3
 
@@ -194,7 +198,7 @@ function ataqueAleatorioEnemigo() {
     
     if (ataqueAleatorio == 0 || ataqueAleatorio == 1) {
         ataqueEnemigo.push('FUEGO')
-    } else if (ataqueAleatorio == 2 || ataqueAleatorio == 3) {
+    } else if (ataqueAleatorio == 3 || ataqueAleatorio == 4) {
         ataqueEnemigo.push('AGUA')
     } else {
         ataqueEnemigo.push('TIERRA')
@@ -215,45 +219,68 @@ function indexAmbosOponentes(jugador, enemigo) {
 }
 
 function combate() {
+    // ❗✅🟡
     for(let i = 0; i < ataqueJugador.length; i++) {
         indexAmbosOponentes(i, i)
         if(ataqueJugador[i] === ataqueEnemigo[i]) {
-            crearMensaje("EMPATE")
+            emojiJugador = '🟡'
+            emojiEnemigo = '🟡'
+            crearMensaje("EMPATE", emojiEnemigo, emojiJugador)
         } else if (ataqueJugador[i] == 'FUEGO' && ataqueEnemigo[i] == 'TIERRA') {
-            crearMensaje("GANASTE")
-             vidasEnemigo--
-             spanVidasEnemigo.innerHTML = vidasEnemigo
+            emojiJugador = '✅'
+            emojiEnemigo = '❗'
+            crearMensaje("GANASTE", emojiEnemigo, emojiJugador)
+            victoriasJugador++
+            spanVidasJugador.innerHTML = victoriasJugador
+            spanVidasEnemigo.innerHTML = victoriasEnemigo
         } else if (ataqueJugador[i] == 'TIERRA' && ataqueEnemigo[i] == 'AGUA') {
-            crearMensaje("GANASTE")
-             vidasEnemigo--
-             spanVidasEnemigo.innerHTML = vidasEnemigo
+            emojiJugador = '✅'
+            emojiEnemigo = '❗'
+            crearMensaje("GANASTE", emojiEnemigo, emojiJugador)
+            victoriasJugador++
+            spanVidasJugador.innerHTML = victoriasJugador
+            spanVidasEnemigo.innerHTML = victoriasEnemigo
+            
+        } else if (ataqueJugador[i] == 'AGUA' && ataqueEnemigo[i] == 'FUEGO') {
+            emojiJugador = '✅'
+            emojiEnemigo = '❗'
+            crearMensaje("GANASTE", emojiEnemigo, emojiJugador)
+            victoriasJugador++
+            spanVidasJugador.innerHTML = victoriasJugador
+            spanVidasEnemigo.innerHTML = victoriasEnemigo
+             
         } else {
-            crearMensaje("PERDISTE")
-             vidasJugador--
-             spanVidasEnemigo.innerHTML = vidasJugador
+            emojiJugador = '❗'
+            emojiEnemigo = '✅'
+            crearMensaje("PERDISTE", emojiEnemigo, emojiJugador)
+            victoriasEnemigo++
+            spanVidasJugador.innerHTML = victoriasJugador
+            spanVidasEnemigo.innerHTML = victoriasEnemigo
         }
     }
 
-    revisarVidas()
+    revisarVictorias()
 }
 
-function revisarVidas() {
-    if (vidasEnemigo == 0) {
+function revisarVictorias() {
+    if (victoriasJugador > victoriasEnemigo) {
         crearMensajeFinal("FELICITACIONES! Ganaste :)")
-    } else if (vidasJugador == 0) {
+    } else if(victoriasJugador === victoriasEnemigo){
+        crearMensajeFinal("¡Empate! ¿Quieres intentarlo otra vez?")
+    } else {
         crearMensajeFinal('Lo siento, perdiste :(')
     }
 }
 
-function crearMensaje(resultado) {
+function crearMensaje(resultado, emojiE, emojiJ) {
     
     
     let nuevoAtaqueDelJugador = document.createElement('p')
     let nuevoAtaqueDelEnemigo = document.createElement('p')
 
     sectionMensajes.innerHTML = resultado
-    nuevoAtaqueDelJugador.innerHTML = indexAtaqueJugador
-    nuevoAtaqueDelEnemigo.innerHTML = indexAtaqueEnemigo
+    nuevoAtaqueDelJugador.innerHTML = emojiJ + ' ' + indexAtaqueJugador
+    nuevoAtaqueDelEnemigo.innerHTML = indexAtaqueEnemigo + ' ' + emojiE
 
     ataquesDelJugador.appendChild(nuevoAtaqueDelJugador)
     ataquesDelEnemigo.appendChild(nuevoAtaqueDelEnemigo)
