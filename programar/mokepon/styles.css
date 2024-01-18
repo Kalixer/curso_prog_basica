@@ -114,7 +114,23 @@ input:checked + label {
   flex-direction: column;
   align-items: center;
 }
-
+.botones {
+  display: flex;
+  flex-direction: column;
+}
+.botones .first-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.botones .second-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.botones button {
+  margin: 4px;
+}
 #ver-mapa {
   flex-direction: column;
   align-items: center;
