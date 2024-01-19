@@ -23,12 +23,12 @@
             <canvas id="mapa"></canvas>
             <div class="botones">
                 <div class="first-button">
-                    <button onClick="moverPersonajeUP()">UP</button>
+                    <button onMouseUp="detenerMovimiento()" onMouseDown="moverPersonajeUP()">UP</button>
                 </div>
                 <div class="second-button">
-                    <button onClick="moverPersonajeLEFT()">LEFT</button>
-                    <button onClick="moverPersonajeDOWN()">DOWN</button>
-                    <button onClick="moverPersonajeRIGHT()">RIGHT</button>
+                    <button onMouseUp="detenerMovimiento()" onMouseDown="moverPersonajeLEFT()">LEFT</button>
+                    <button onMouseUp="detenerMovimiento()" onMouseDown="moverPersonajeDOWN()">DOWN</button>
+                    <button onMouseUp="detenerMovimiento()" onMouseDown="moverPersonajeRIGHT()">RIGHT</button>
                 </div>
             </div>
         </section>
