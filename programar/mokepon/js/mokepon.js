@@ -108,6 +108,30 @@ ratigueya.ataques.push(
     { nombre: '💧', id: 'boton-agua' },
     { nombre: '🌱', id: 'boton-tierra' },
 )
+hipodogeEnemigo.ataques.push(
+    { nombre: '💧', id: 'boton-agua' },
+    { nombre: '💧', id: 'boton-agua' },
+    { nombre: '💧', id: 'boton-agua' },
+    { nombre: '🔥', id: 'boton-fuego' },
+    { nombre: '🌱', id: 'boton-tierra' },
+)
+
+capipepoEnemigo.ataques.push(
+    { nombre: '🌱', id: 'boton-tierra' },
+    { nombre: '🌱', id: 'boton-tierra' },
+    { nombre: '🌱', id: 'boton-tierra' },
+    { nombre: '💧', id: 'boton-agua' },
+    { nombre: '🔥', id: 'boton-fuego' },
+    
+)
+
+ratigueyaEnemigo.ataques.push(
+    { nombre: '🔥', id: 'boton-fuego' },
+    { nombre: '🔥', id: 'boton-fuego' },
+    { nombre: '🔥', id: 'boton-fuego' },
+    { nombre: '💧', id: 'boton-agua' },
+    { nombre: '🌱', id: 'boton-tierra' },
+)
 
 mokepones.push(hipodoge,capipepo,ratigueya)
 
@@ -143,8 +167,6 @@ function seleccionarMascotaJugador() {
     
     sectionSeleccionarMascota.style.display = 'none'
     
-    
-    // sectionSeleccionarAtaque.style.display = 'flex'
     sectionVerMapa.style.display = 'flex'
     
     
@@ -164,7 +186,6 @@ function seleccionarMascotaJugador() {
     inicarMapa()
 
     extraerAtaques(mascotaJugador)
-    seleccionarMascotaEnemigo()
 }
 
 function extraerAtaques(mascotaJugador) {
@@ -217,11 +238,9 @@ function secuenciaAtaque() {
         })
     })
 }
-function seleccionarMascotaEnemigo() {
-    let mascotaAleatoria = aleatorio(0, mokepones.length - 1)
-
-    spanMascotaEnemigo.innerHTML = mokepones[mascotaAleatoria].nombre
-    ataquesMokeponEnemigo = mokepones[mascotaAleatoria].ataques
+function seleccionarMascotaEnemigo(enemigo) {
+    spanMascotaEnemigo.innerHTML = enemigo.nombre
+    ataquesMokeponEnemigo = enemigo.ataques
     secuenciaAtaque()
 }
 function asignarAtaquesEnemigo() {
@@ -434,11 +453,12 @@ function clickTarget(evento) {
 }
 
 function revisarColision(enemigo) {
+    
     const arribaEnemigo = enemigo.y
     const abajoEnemigo = enemigo.y + enemigo.alto
     const derechaEnemigo = enemigo.x + enemigo.ancho
     const izquierdaEnemigo = enemigo.x
-
+    
     const arribaMascota = mascotaJugadorObjeto.y
     const abajoMascota = mascotaJugadorObjeto.y + mascotaJugadorObjeto.alto
     const derechaMascota = mascotaJugadorObjeto.x + mascotaJugadorObjeto.ancho
@@ -449,11 +469,15 @@ function revisarColision(enemigo) {
         arribaMascota >  abajoEnemigo ||
         derechaMascota < izquierdaEnemigo ||
         izquierdaMascota > derechaEnemigo
-    ) {
+        ) {
         return
     } else {
+        clearInterval(intervalo)
         detenerMovimiento()
-        alert('Colision: ' + enemigo.nombre)
+        console.log("Movimiento detectado")
+        sectionSeleccionarAtaque.style.display = 'flex'
+        sectionVerMapa.style.display = 'none'
+        seleccionarMascotaEnemigo(enemigo)
     }
 }
 
