@@ -50,6 +50,13 @@ let intervalo
 let mapaBackground = new Image()
 mapaBackground.src = './assets/mokemap.webp'
 
+let teclasPresionadas = {
+    ArrowUp: false,
+    ArrowDown: false,
+    ArrowLeft: false,
+    ArrowRight: false,
+}
+
 class Mokepon {
     constructor(nombre, foto, vida, fotoMapa, x = 10, y = 10) {
         this.nombre = nombre
@@ -398,27 +405,38 @@ function inicarMapa() {
 }
 
 function sePresionoUnaTecla(evento) {
-    switch (evento.key) {
-        case 'ArrowUp':
-            moverPersonajeUP()
-            break
-        case 'ArrowDown':
-            moverPersonajeDOWN()
-            break
-        case 'ArrowLeft':
-            moverPersonajeLEFT()
-            break
-        case 'ArrowRight':
-            moverPersonajeRIGHT()
-            break
-        default:
-            break
-    }
+    teclasPresionadas[evento.key] = true
+    actualizarVelocidad()
+    // switch (evento.key) {
+    //     case 'ArrowUp':
+    //         moverPersonajeUP()
+    //         break
+    //     case 'ArrowDown':
+    //         moverPersonajeDOWN()
+    //         break
+    //     case 'ArrowLeft':
+    //         moverPersonajeLEFT()
+    //         break
+    //     case 'ArrowRight':
+    //         moverPersonajeRIGHT()
+    //         break
+    //     default:
+    //         break
+    // }
 
 
 }
 
-function detenerMovimiento() {
+function actualizarVelocidad() {
+    mascotaJugadorObjeto.velocidadX = (teclasPresionadas.ArrowRight - teclasPresionadas.ArrowLeft) * 5;
+    mascotaJugadorObjeto.velocidadY = (teclasPresionadas.ArrowDown - teclasPresionadas.ArrowUp) * 5;
+}
+
+function detenerMovimiento(evento) {
+    if(evento != undefined) {
+        teclasPresionadas[evento.key] = false
+        actualizarVelocidad()
+    }
     mascotaJugadorObjeto.velocidadX = 0
     mascotaJugadorObjeto.velocidadY = 0
 }
@@ -471,14 +489,13 @@ function revisarColision(enemigo) {
         izquierdaMascota > derechaEnemigo
         ) {
         return
-    } else {
-        clearInterval(intervalo)
+    }
+    clearInterval(intervalo)
         detenerMovimiento()
         console.log("Movimiento detectado")
         sectionSeleccionarAtaque.style.display = 'flex'
         sectionVerMapa.style.display = 'none'
         seleccionarMascotaEnemigo(enemigo)
-    }
 }
 
 window.addEventListener('load', iniciarJuego)
