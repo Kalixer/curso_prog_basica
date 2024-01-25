@@ -260,12 +260,27 @@ function secuenciaAtaque() {
                 console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
             }
-            ataqueAleatorioEnemigo()
+            if(ataqueJugador.length === 5) {
+                enviarAtaques()
+            }
             
             boton.disabled = true
         })
     })
 }
+
+function enviarAtaques() {
+    fetch(`/mokepon/${jugadorId}/ataques/`, {
+        method:'post',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ataques: ataqueJugador
+        })
+    })
+}
+
 function seleccionarMascotaEnemigo(enemigo) {
     spanMascotaEnemigo.innerHTML = enemigo.nombre
     ataquesMokeponEnemigo = enemigo.ataques
@@ -408,6 +423,7 @@ function pintarCanvas() {
     enviarPosicion(mascotaJugadorObjeto.x, mascotaJugadorObjeto.y)
     mokeponesEnemigos.forEach((mokepon) => {
         mokepon.pintarMokepon()
+        revisarColision(mokepon)
     })
 
     if(mascotaJugadorObjeto.velocidadX !== 0 || mascotaJugadorObjeto.velocidadY !== 0) {
