@@ -22,6 +22,7 @@ const sectionVerMapa = document.getElementById('ver-mapa')
 const mapa = document.getElementById('mapa')
 
 let jugadorId = null
+let enemigoId = null
 let mokepones = []
 let mokeponesEnemigos = []
 let ataqueJugador = []
@@ -270,7 +271,7 @@ function secuenciaAtaque() {
 }
 
 function enviarAtaques() {
-    fetch(`/mokepon/${jugadorId}/ataques/`, {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques/`, {
         method:'post',
         headers: {
             "Content-Type": "application/json"
@@ -455,11 +456,11 @@ function enviarPosicion(x, y) {
                         const mokeponNombre = enemigo.mokepon.nombre || ""
 
                         if(mokeponNombre === "Hipodoge"){
-                            mokeponEnemigo = new Mokepon('Hipodoge', './assets/mokepons_mokepon_hipodoge_attack.png', 5, './assets/hipodoge.png')
+                            mokeponEnemigo = new Mokepon('Hipodoge', './assets/mokepons_mokepon_hipodoge_attack.png', 5, './assets/hipodoge.png', enemigo.id)
                         } else if(mokeponNombre == "Capipepo") {
-                            mokeponEnemigo = new Mokepon('Capipepo', './assets/mokepons_mokepon_capipepo_attack.png', 5, './assets/capipepo.png')
+                            mokeponEnemigo = new Mokepon('Capipepo', './assets/mokepons_mokepon_capipepo_attack.png', 5, './assets/capipepo.png', enemigo.id)
                         } else if(mokeponNombre == "Ratigueya") {
-                            mokeponEnemigo = new Mokepon('Ratigueya', './assets/mokepons_mokepon_ratigueya_attack.png', 5, './assets/ratigueya.png')
+                            mokeponEnemigo = new Mokepon('Ratigueya', './assets/mokepons_mokepon_ratigueya_attack.png', 5, './assets/ratigueya.png', enemigo.id)
                         }
                         
                         mokeponEnemigo.x = enemigo.x
@@ -569,6 +570,8 @@ function revisarColision(enemigo) {
     clearInterval(intervalo)
         detenerMovimiento()
         console.log("Movimiento detectado")
+
+        enemigoId = enemigo.id
         sectionSeleccionarAtaque.style.display = 'flex'
         sectionVerMapa.style.display = 'none'
         seleccionarMascotaEnemigo(enemigo)
