@@ -173,7 +173,7 @@ function unirseAlJuego() {
             if(res.ok){
                 res.text()
                     .then(function(respuesta) {
-                        console.log(respuesta)
+                        // console.log(respuesta)
                         jugadorId = respuesta
                     })
             }
@@ -253,17 +253,17 @@ function secuenciaAtaque() {
         boton.addEventListener('click', (e) => {
             if(e.target.textContent === '🔥') {
                 ataqueJugador.push('FUEGO')
-                console.log('Jugador: ', ataqueJugador)
+                // console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
                 boton.disabled = true
             } else if (e.target.textContent === '💧') {
                 ataqueJugador.push('AGUA')
-                console.log('Jugador: ', ataqueJugador)
+                // console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
                 boton.disabled = true
             } else {
                 ataqueJugador.push('TIERRA')
-                console.log('Jugador: ', ataqueJugador)
+                // console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
                 boton.disabled = true
             }
@@ -466,9 +466,9 @@ function enviarPosicion(x, y) {
         if(res.ok) {
             res.json()
                 .then(function ({ enemigos } ) {
-                    console.log(enemigos)
+                    // console.log(enemigos)
                     mokeponesEnemigos = enemigos.map((enemigo) => {
-                        console.log(enemigo)
+                        // console.log(enemigo)
                         let mokeponEnemigo = null
                         const mokeponNombre = enemigo.mokepon.nombre || ""
 
@@ -565,7 +565,7 @@ function clickTarget(evento) {
 }
 
 function revisarColision(enemigo) {
-    
+
     const arribaEnemigo = enemigo.y
     const abajoEnemigo = enemigo.y + enemigo.alto
     const derechaEnemigo = enemigo.x + enemigo.ancho
@@ -584,14 +584,18 @@ function revisarColision(enemigo) {
         ) {
         return
     }
-    clearInterval(intervalo)
-    detenerMovimiento()
-    console.log("Movimiento detectado")
-
-    enemigoId = enemigo.id
-    sectionSeleccionarAtaque.style.display = 'flex'
-    sectionVerMapa.style.display = 'none'
-    seleccionarMascotaEnemigo(enemigo)
+    // Al principio estas variables entran como 'undefined'
+    // Así que la primera vez abría de inmediato el combate
+    if(enemigo.x != undefined && enemigo.y != undefined) {
+        clearInterval(intervalo)
+        detenerMovimiento()
+        console.log("Movimiento detectado")
+    
+        enemigoId = enemigo.id
+        sectionSeleccionarAtaque.style.display = 'flex'
+        sectionVerMapa.style.display = 'none'
+        seleccionarMascotaEnemigo(enemigo)
+    }
 }
 
 window.addEventListener('load', iniciarJuego)
