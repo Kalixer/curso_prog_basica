@@ -173,7 +173,6 @@ function unirseAlJuego() {
             if(res.ok){
                 res.text()
                     .then(function(respuesta) {
-                        // console.log(respuesta)
                         jugadorId = respuesta
                     })
             }
@@ -253,17 +252,14 @@ function secuenciaAtaque() {
         boton.addEventListener('click', (e) => {
             if(e.target.textContent === '🔥') {
                 ataqueJugador.push('FUEGO')
-                // console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
                 boton.disabled = true
             } else if (e.target.textContent === '💧') {
                 ataqueJugador.push('AGUA')
-                // console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
                 boton.disabled = true
             } else {
                 ataqueJugador.push('TIERRA')
-                // console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
                 boton.disabled = true
             }
@@ -466,9 +462,7 @@ function enviarPosicion(x, y) {
         if(res.ok) {
             res.json()
                 .then(function ({ enemigos } ) {
-                    // console.log(enemigos)
                     mokeponesEnemigos = enemigos.map((enemigo) => {
-                        // console.log(enemigo)
                         let mokeponEnemigo = null
                         const mokeponNombre = enemigo.mokepon.nombre || ""
 
@@ -501,24 +495,6 @@ function inicarMapa() {
 function sePresionoUnaTecla(evento) {
     teclasPresionadas[evento.key] = true
     actualizarVelocidad()
-    // switch (evento.key) {
-    //     case 'ArrowUp':
-    //         moverPersonajeUP()
-    //         break
-    //     case 'ArrowDown':
-    //         moverPersonajeDOWN()
-    //         break
-    //     case 'ArrowLeft':
-    //         moverPersonajeLEFT()
-    //         break
-    //     case 'ArrowRight':
-    //         moverPersonajeRIGHT()
-    //         break
-    //     default:
-    //         break
-    // }
-
-
 }
 
 function actualizarVelocidad() {
