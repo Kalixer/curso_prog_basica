@@ -172,7 +172,7 @@ function unirseAlJuego() {
                 res.text()
                     .then(function(respuesta) {
                         console.log(respuesta)
-                        judagorId = respuesta
+                        jugadorId = respuesta
                     })
             }
         })
@@ -206,7 +206,7 @@ function seleccionarMascotaJugador() {
 }
 
 function seleccionarMokepon(mascotaJugador) {
-    fetch(`http://localhost:8080/mokepon/${judagorId}`, {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -252,26 +252,28 @@ function secuenciaAtaque() {
                 ataqueJugador.push('FUEGO')
                 console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
+                boton.disabled = true
             } else if (e.target.textContent === '💧') {
                 ataqueJugador.push('AGUA')
                 console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
+                boton.disabled = true
             } else {
                 ataqueJugador.push('TIERRA')
                 console.log('Jugador: ', ataqueJugador)
                 boton.style.background = '#112f58'
+                boton.disabled = true
             }
             if(ataqueJugador.length === 5) {
                 enviarAtaques()
             }
             
-            boton.disabled = true
         })
     })
 }
 
 function enviarAtaques() {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques/`, {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`, {
         method:'post',
         headers: {
             "Content-Type": "application/json"
@@ -285,7 +287,7 @@ function enviarAtaques() {
 }
 
 function obtenerAtaques() {
-    fetch(`http://localhost:8080/mokepon/${enemigoId}/ataques/`)
+    fetch(`http://localhost:8080/mokepon/${enemigoId}/ataques`)
         .then(function (res) {
             if(res.ok) {
                 res.json()
@@ -447,7 +449,7 @@ function pintarCanvas() {
 }
 
 function enviarPosicion(x, y) {
-    fetch(`http://localhost:8080/mokepon/${judagorId}/posicion`, {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`, {
         method: 'post',
         headers: {
             "Content-Type": 'application/json'
@@ -580,13 +582,13 @@ function revisarColision(enemigo) {
         return
     }
     clearInterval(intervalo)
-        detenerMovimiento()
-        console.log("Movimiento detectado")
+    detenerMovimiento()
+    console.log("Movimiento detectado")
 
-        enemigoId = enemigo.id
-        sectionSeleccionarAtaque.style.display = 'flex'
-        sectionVerMapa.style.display = 'none'
-        seleccionarMascotaEnemigo(enemigo)
+    enemigoId = enemigo.id
+    sectionSeleccionarAtaque.style.display = 'flex'
+    sectionVerMapa.style.display = 'none'
+    seleccionarMascotaEnemigo(enemigo)
 }
 
 window.addEventListener('load', iniciarJuego)
