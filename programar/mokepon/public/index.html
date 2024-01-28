@@ -24,12 +24,12 @@
             <canvas id="mapa"></canvas>
             <div class="botones">
                 <div class="first-button">
-                    <button onMouseUp="detenerMovimiento()" onMouseDown="moverPersonajeUP()">UP</button>
+                    <button onTouchEnd="detenerMovimiento()" onMouseUp="detenerMovimiento()" onTouchStart="moverPersonajeUP()" onMouseDown="moverPersonajeUP()">UP</button>
                 </div>
                 <div class="second-button">
-                    <button onMouseUp="detenerMovimiento()" onMouseDown="moverPersonajeLEFT()">LEFT</button>
-                    <button onMouseUp="detenerMovimiento()" onMouseDown="moverPersonajeDOWN()">DOWN</button>
-                    <button onMouseUp="detenerMovimiento()" onMouseDown="moverPersonajeRIGHT()">RIGHT</button>
+                    <button onTouchEnd="detenerMovimiento()" onMouseUp="detenerMovimiento()" onTouchStart="moverPersonajeLEFT()" onMouseDown="moverPersonajeLEFT()">LEFT</button>
+                    <button onTouchEnd="detenerMovimiento()" onMouseUp="detenerMovimiento()" onTouchStart="moverPersonajeDOWN()" onMouseDown="moverPersonajeDOWN()">DOWN</button>
+                    <button onTouchEnd="detenerMovimiento()" onMouseUp="detenerMovimiento()" onTouchStart="moverPersonajeRIGHT()" onMouseDown="moverPersonajeRIGHT()">RIGHT</button>
                 </div>
             </div>
         </section>
@@ -63,6 +63,6 @@
                 </div>
             </div>
         </section>
-        <script src="./js/mokepon.js"></script>
+        <script src="index.js"></script>
     </body>
 </html>
